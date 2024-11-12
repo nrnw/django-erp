@@ -16,7 +16,8 @@ __copyright__ = 'Copyright (c) 2013 Emanuele Bertoldi'
 __version__ = '0.0.1'
 
 from django import template
-from django.core.urlresolvers import reverse
+# from django.core.urlresolvers import reverse # Legacy
+from django.urls import reverse
 from django.template.loader import render_to_string
 from django.template import Node, NodeList, Variable, Library
 from django.template import TemplateSyntaxError, VariableDoesNotExist
