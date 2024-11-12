@@ -157,17 +157,19 @@ TEMPLATE_DIRS = (
 # List of middleware classes to use.  Order is important; in the request phase,
 # this middleware classes will be applied in the order given, and in the
 # response phase the middleware will be applied in reverse order.
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',  # Required for session handling
     'django.middleware.common.CommonMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',  # Required for authentication
     'django.middleware.locale.LocaleMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',  # Required for messages framework
     'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
-    # Uncomment the next line for simple clickjacking protection:
+    # Uncomment if you need clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
-)
+]
+
 
 # Root for URL dispatcher.
 ROOT_URLCONF = 'djangoerp.urls'
