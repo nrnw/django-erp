@@ -17,6 +17,7 @@ __version__ = '0.0.1'
 
 from django.conf.urls import *
 from django.conf import settings
+from django.urls import path, include
 # from django.db.models.loading import cache # Legacy
 
 # Workaround for Django's ticket #10405.
@@ -25,14 +26,16 @@ from django.conf import settings
 #     cache.get_models()
 
 # Basic URL patterns bootstrap.
-urlpatterns = patterns('',)
-
+# urlpatterns = patterns('',) # Legacy
+urlpatterns = []
 if 'django.contrib.admin' in settings.INSTALLED_APPS:
-  from django.contrib import admin
-  admin.autodiscover()
-  urlpatterns += patterns('', (r'^admin/', include(admin.site.urls)))
-  if 'django.contrib.admindocs' in settings.INSTALLED_APPS:
-    urlpatterns += patterns('', (r'^admin/doc/', include('django.contrib.admindocs.urls')))
+    from django.contrib import admin
+    admin.autodiscover()
+    urlpatterns += [path('admin/', admin.site.urls)]  # Updated for Django 2.x+
+    
+    if 'django.contrib.admindocs' in settings.INSTALLED_APPS:
+        urlpatterns += [path('admin/doc/', include('django.contrib.admindocs.urls'))]
+
 
 if 'django.contrib.staticfiles' in settings.INSTALLED_APPS:
   from django.contrib.staticfiles.urls import staticfiles_urlpatterns
@@ -42,37 +45,35 @@ if 'django.contrib.staticfiles' in settings.INSTALLED_APPS:
 LOADING = False
 
 def autodiscover():
-    """ Auto discover urls of installed applications.
-    """
+    """ Auto discover urls of installed applications. """
     global LOADING
     if LOADING:
         return
     
     LOADING = True
 
-    import imp
-    
+    import importlib
+
     for app in settings.INSTALLED_APPS:
         if app.startswith('django.'):
             continue
-            
-        # Step 1: find out the app's __path__.
-        try:
-            app_path = __import__(app, {}, {}, [app.split('.')[-1]]).__path__
-        except AttributeError:
-            continue
 
-        # Step 2: use imp.find_module to find the app's urls.py.
+        # Step 1: Find out the app's __path__.
         try:
-            imp.find_module('urls', app_path)
+            app_module = importlib.import_module(app)
+            app_path = app_module.__path__
         except ImportError:
             continue
 
-        # Step 3: return the app's url patterns.
-        pkg, sep, name = app.rpartition('.')
-        global urlpatterns
-        urlpatterns += patterns("", (r'^', include('%s.urls' % app)))
-        
+        # Step 2: Check if the app has a 'urls.py'.
+        try:
+            importlib.import_module(f'{app}.urls')
+        except ImportError:
+            continue
+
+        # Step 3: Include the app's URL patterns.
+        urlpatterns.append(path(f'{app}/', include(f'{app}.urls')))
+    
     LOADING = False
 
 autodiscover()
