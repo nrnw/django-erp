@@ -216,10 +216,13 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.admindocs',
-    'django.contrib.comments',
-    'django.contrib.markup',
+    # 'django.contrib.comments', # Legacy
+    # 'django.contrib.contenttypes',  # Required by django-contrib-comments
+    'django_comments',  
+    # 'django.contrib.markup', # Legacy
+    'django_markup',
     'django.contrib.redirects',
-    'django.contrib.formtools',
+    # 'django.contrib.formtools', # Legacy
 
     #'south',
     
