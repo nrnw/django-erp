@@ -15,7 +15,7 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2013 Emanuele Bertoldi'
 __version__ = '0.0.1'
 
-from base import *
+from .base import *
 
 # Auto-discovering of application specific settings.
 for app in INSTALLED_APPS:
