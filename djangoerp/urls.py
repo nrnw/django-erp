@@ -73,7 +73,12 @@ def autodiscover():
 
         # Step 3: Include the app's URL patterns.
         urlpatterns.append(path(f'{app}/', include(f'{app}.urls')))
-    
+   
+    # Add core.urls explicitly if djangoerp.core is installed
+    if 'djangoerp.core' in settings.INSTALLED_APPS:
+        from djangoerp.core import urls as core_urls
+        urlpatterns.append(path('', include('djangoerp.core.urls')))    
+   
     LOADING = False
 
 autodiscover()
