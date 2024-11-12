@@ -15,7 +15,7 @@ __author__ = 'Emanuele Bertoldi <emanuele.bertoldi@gmail.com>'
 __copyright__ = 'Copyright (c) 2013 Emanuele Bertoldi'
 __version__ = '0.0.1'
 
-from utils.dependencies import check_dependency
+from djangoerp.core.utils.dependencies  import check_dependency
 
 check_dependency('django.contrib.auth')
 check_dependency('django.contrib.contenttypes')
