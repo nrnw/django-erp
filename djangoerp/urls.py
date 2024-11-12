@@ -17,12 +17,12 @@ __version__ = '0.0.1'
 
 from django.conf.urls import *
 from django.conf import settings
-from django.db.models.loading import cache
+# from django.db.models.loading import cache # Legacy
 
 # Workaround for Django's ticket #10405.
 # See http://code.djangoproject.com/ticket/10405#comment:10 for more info.
-if not cache.loaded:
-    cache.get_models()
+# if not cache.loaded: # Legacy
+#     cache.get_models()
 
 # Basic URL patterns bootstrap.
 urlpatterns = patterns('',)
