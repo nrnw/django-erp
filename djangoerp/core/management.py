@@ -29,11 +29,13 @@ check_dependency('django_comments')
 check_dependency('django_markup')
 check_dependency('django.contrib.redirects')
 
-from django.db.models.signals import post_syncdb
+from django.db.models.signals import post_migrate
+from django.dispatch import receiver
 
 # Installation of application specific stuff.
 INSTALLING = False
 
+@receiver(post_migrate)
 def install_apps(sender, **kwargs):
     global INSTALLING
     if INSTALLING:
@@ -46,13 +48,13 @@ def install_apps(sender, **kwargs):
     from django.conf import settings
     for app in settings.INSTALLED_APPS:
         if not app.startswith('django.') and (app != "djangoerp.core"):
-            management = __import__("%s.management" % app, {}, {}, ["install"])
             try:
-                install_func = management.install
+                # Dynamically import the management module for each app
+                management = __import__("%s.management" % app, {}, {}, ["install"])
+                install_func = getattr(management, 'install', None)
+                
                 if callable(install_func):
-                    print("Installing app %s" % app) 
+                    print(f"Installing app {app}")
                     install_func(sender, **kwargs)
-            except AttributeError:
-                pass
-    
-post_syncdb.connect(install_apps, dispatch_uid="install_apps")
+            except (ImportError, AttributeError):
+                pass  # Handle missing 'install' function or import errors gracefully
