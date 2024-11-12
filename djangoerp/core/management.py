@@ -42,7 +42,7 @@ def install_apps(sender, **kwargs):
     
     INSTALLING = True
     
-    print "Installing apps ..."
+    print ("Installing apps ...")
     
     from django.conf import settings
     for app in settings.INSTALLED_APPS:
@@ -51,7 +51,7 @@ def install_apps(sender, **kwargs):
             try:
                 install_func = management.install
                 if callable(install_func):
-                    print "Installing app %s" % app
+                    print("Installing app %s" % app) 
                     install_func(sender, **kwargs)
             except AttributeError:
                 pass
