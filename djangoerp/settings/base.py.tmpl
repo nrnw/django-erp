@@ -153,6 +153,27 @@ TEMPLATE_DIRS = (
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
 )
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',  # Required for admin
+        'DIRS': [
+            os.path.join(THEME_PATH, "templates"),
+            os.path.join(REPORT_PATH, "templates"),
+        ],
+        'APP_DIRS': True,  # Enable app directories for templates
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.media',
+                'django.template.context_processors.static',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
 
 # List of middleware classes to use.  Order is important; in the request phase,
 # this middleware classes will be applied in the order given, and in the
