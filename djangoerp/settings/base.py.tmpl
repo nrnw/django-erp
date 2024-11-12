@@ -18,7 +18,7 @@ __version__ = '0.0.1'
 import os
 import datetime
 from pytz import common_timezones
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 PROJECT_PATH = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), os.path.pardir))
 THEME_PATH = os.path.join(PROJECT_PATH, 'themes', 'default')
