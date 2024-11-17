@@ -6,7 +6,7 @@ django ERP
 Pre-requisites
 --------------
 
-Make sure you have the following pre-requisites installed:
+Make sure you have the following pre-requisites installed for python 2 version:
 
  * **python** >= 2.7 (required)
    http://www.python.org
@@ -25,6 +25,8 @@ Make sure you have the following pre-requisites installed:
 
  * **mod_wsgi** (optional)
    http://code.google.com/p/modwsgi
+
+Latest code is updated to use python 3. Use  `pip install -r requirements.txt` to install the pre-requisites.
 
 Installation
 ------------
